@@ -1,1 +1,1 @@
-"GO Lab" 
+"GO Lab Yourself" 
