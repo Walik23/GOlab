@@ -1,1 +1,1 @@
-"GO Lab Yourself With Me!" 
+"Welcome Home!" 
