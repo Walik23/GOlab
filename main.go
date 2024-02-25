@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 	"time"
 )
@@ -20,7 +19,7 @@ func main() {
 
 	err := server.ListenAndServe()
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 }
 
