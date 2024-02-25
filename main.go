@@ -11,8 +11,10 @@ type currentTime struct {
 }
 
 func api(w http.ResponseWriter, r *http.Request) {
-	t := time.Now().Format(time.RFC3339)
-	rfc3339 := currentTime{Time: t}
+	t := time.Now()
+	rfc3339 := currentTime{
+		Time: t.Format(time.RFC3339),
+	}
 
 	w.Header().Set("Content-Type", "application/json")
 	result, err := json.Marshal(rfc3339)
