@@ -12,29 +12,19 @@ type currentTime struct {
 
 func main() {
 	http.HandleFunc("/time", api)
-
-	server := &http.Server{
-		Addr: ":8795",
-	}
-
-	err := server.ListenAndServe()
-	if err != nil {
-		panic(err)
-	}
+	panic(http.ListenAndServe(":8795", nil))
 }
 
 func api(w http.ResponseWriter, r *http.Request) {
 	t := time.Now().Format(time.RFC3339)
-
-	rfc3339 := currentTime{
-		Time: t,
-	}
+	rfc3339 := currentTime{Time: t}
 
 	w.Header().Set("Content-Type", "application/json")
-
 	result, err := json.Marshal(rfc3339)
+
 	if err != nil {
 		panic(err)
 	}
+
 	w.Write(result)
 }
