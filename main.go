@@ -6,27 +6,43 @@ import (
 	"time"
 )
 
-type currentTime struct {
+type ServerStatus struct {
+	Message string `json:"message"`
+}
+
+func serverHandle(w http.ResponseWriter, req *http.Request) {
+	status := ServerStatus{Message: "Server is running!"}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(status)
+}
+
+type TimeResponse struct {
 	Time string `json:"time"`
 }
 
-func api(w http.ResponseWriter, r *http.Request) {
-	t := time.Now()
-	rfc3339 := currentTime{
-		Time: t.Format(time.RFC3339),
+func getTime(w http.ResponseWriter, req *http.Request) {
+	currTime := time.Now()
+
+	response := TimeResponse{
+		Time: currTime.Format(time.RFC3339),
+	}
+
+	jsonResponse, err := json.Marshal(response)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	result, err := json.Marshal(rfc3339)
 
-	if err != nil {
-		panic(err)
-	}
-
-	w.Write(result)
+	w.Write(jsonResponse)
 }
 
 func main() {
-	http.HandleFunc("/time", api)
-	panic(http.ListenAndServe(":8795", nil))
+	http.HandleFunc("/time", getTime)
+	http.HandleFunc("/", serverHandle)
+
+	http.ListenAndServe(":8795", nil)
 }
