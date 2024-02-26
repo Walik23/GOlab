@@ -19,14 +19,14 @@ func serverHandle(w http.ResponseWriter, req *http.Request) {
 }
 
 type TimeResponse struct {
-	Time string `json:"time"`
+	CurrentTime string `json:"time"`
 }
 
 func getTime(w http.ResponseWriter, req *http.Request) {
-	currTime := time.Now()
+	currentTime := time.Now()
 
 	response := TimeResponse{
-		Time: currTime.Format(time.RFC3339),
+		CurrentTime: currentTime.Format(time.RFC3339),
 	}
 
 	jsonResponse, err := json.Marshal(response)
