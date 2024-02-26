@@ -11,7 +11,6 @@ type currentTime struct {
 }
 
 func api(w http.ResponseWriter, r *http.Request) {
-
 	t := time.Now().Format(time.RFC3339)
 	rfc3339 := currentTime{Time: t}
 
